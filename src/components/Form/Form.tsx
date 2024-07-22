@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import './Form.css';
 import { useTelegram } from '../../hooks/useTelegram';
 
@@ -7,10 +7,24 @@ const Form = () => {
   const { tg } = useTelegram();
   const [country, setCountry] = useState('');
   const [street, setStreet] = useState('');
+  const [subject, setSubject] = useState('physical');
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  const onSendData = useCallback(() => {
+    const data = {
+      country,
+      street,
+      subject,
+    };
+    tg.sendData(JSON.stringify(data));
+  }, []);
+
+  useEffect(() => {
+    tg.onEvent('mainButtonClicked', onSendData);
+
+    return () => {
+      tg.offEvent('mainButtonClicked', onSendData);
+    };
+  }, []);
 
   useEffect(() => {
     tg.MainButton.setParams({
@@ -25,6 +39,10 @@ const Form = () => {
       tg.MainButton.show();
     }
   }, [country, street]);
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
   return (
     <form className="form" onSubmit={onSubmit}>
@@ -41,7 +59,7 @@ const Form = () => {
         className="input"
         placeholder="Street"
       />
-      <select className="select">
+      <select className="select" onChange={(e) => setSubject(e.target.value)}>
         <option value="physical">Physical</option>
         <option value="legal">Legal</option>
       </select>
