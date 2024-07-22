@@ -1,10 +1,18 @@
-import { ButtonHTMLAttributes, FC, HtmlHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
 import './Button.css';
 
-type ButtonProps = HtmlHTMLAttributes<ButtonHTMLAttributes<HTMLButtonElement>>;
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: FC<ButtonProps> = (props) => {
-  return <button className={`button ${props.className}`}>Button</button>;
+const Button: FC<ButtonProps & PropsWithChildren> = ({
+  children,
+  className,
+  ...props
+}) => {
+  return (
+    <button className={`button ${className}`} {...props}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

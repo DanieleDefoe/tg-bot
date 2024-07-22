@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useTelegram } from './hooks/useTelegram';
 import Header from './components/Header/Header';
+import Button from './components/Button/Button';
+import { Outlet } from '@tanstack/react-router';
 
 const App = () => {
   const { tg, onToggleButton } = useTelegram();
@@ -12,7 +14,8 @@ const App = () => {
   return (
     <div>
       <Header />
-      <button onClick={onToggleButton}>Toggle</button>
+      <Button onClick={onToggleButton}>Toggle</Button>
+      <Outlet />
     </div>
   );
 };
