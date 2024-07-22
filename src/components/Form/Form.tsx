@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import './Form.css';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -16,7 +15,7 @@ const Form = () => {
       subject,
     };
     tg.sendData(JSON.stringify(data));
-  }, []);
+  }, [country, street, subject, tg]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
@@ -24,13 +23,13 @@ const Form = () => {
     return () => {
       tg.offEvent('mainButtonClicked', onSendData);
     };
-  }, []);
+  }, [onSendData, tg]);
 
   useEffect(() => {
     tg.MainButton.setParams({
       text: 'Send data',
     });
-  }, []);
+  }, [tg.MainButton]);
 
   useEffect(() => {
     if (!street || !country) {
@@ -38,7 +37,7 @@ const Form = () => {
     } else {
       tg.MainButton.show();
     }
-  }, [country, street]);
+  }, [country, street, tg.MainButton]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
