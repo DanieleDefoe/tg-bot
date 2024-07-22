@@ -7,7 +7,11 @@ interface WebApp {
   colorScheme: string;
   expand(): void;
   initData: string;
-  initDataUnsafe: object;
+  initDataUnsafe: {
+    user?: {
+      username: string;
+    };
+  };
   isExpanded: boolean;
   isVersionAtLeast(ver: string): boolean;
   offEvent(eventType: string, callback: (...args: any[]) => any): void;
