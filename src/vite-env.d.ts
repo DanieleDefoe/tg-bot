@@ -11,6 +11,7 @@ interface WebApp {
     user?: {
       username: string;
     };
+    query_id?: string;
   };
   isExpanded: boolean;
   isVersionAtLeast(ver: string): boolean;
