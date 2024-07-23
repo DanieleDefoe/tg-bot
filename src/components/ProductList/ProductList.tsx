@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ProductDto } from '../../dtos/product.dto';
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
+import './ProductList.css';
 
 const products: ProductDto[] = [
   {
